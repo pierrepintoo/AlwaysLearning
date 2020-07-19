@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pattern Validation avec formulaire</title>
+    <style>
+            input[pattern]:invalid {
+                background-color: red;
+            }
+            input[pattern]:valid {
+                background-color: green;
+            }
+    </style>
+</head>
+<body>
+    <form method="">
+        <label for="email">E-mail</label>
+        <input name="email" type="email" pattern="\w+@exelib\.net$" required>
+        <br>
+        <br>
+        <label for="password">Password</label>
+        <input pattern="(?=.*?[0-9])\w{6,8}" type="password" required>
+        <br>
+        <br>
+        <button name="password" type="submit">Envoyer</button>        
+    </form>
+</body>
+</html>
