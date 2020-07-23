@@ -1,0 +1,161 @@
+ 
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+    <title>Bouge le son</title>
+    <style>
+        body{margin: 0;}
+        canvas{display: block;}
+    </style>
+</head>
+<body>
+        <audio id="musique" src="lomepal2.ogg">
+        </audio>
+        <div class="container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script>
+                
+        var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.set(0, 5, 35);
+
+        var scene = new THREE.Scene();
+
+        var light = new THREE.PointLight();
+        light.position.set(0, 20, 50);
+        scene.add(light);
+
+        var renderer = renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+                // Responsive
+        window.addEventListener('resize', function()
+        {
+            var width =  window.innerWidth;
+            var height = window.innerHeight;
+            renderer.setSize( width, height );
+            camera.aspect = width / height ;
+            camera.updateProjectionMatrix( );
+        })
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        //controls.enableZoom = false;
+
+        /*var espace = new THREE.CubeGeometry(500, 500, 500);
+        var espaceMaterials = [
+            new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load("space/0001.jpg"), side: THREE.DoubleSide }),
+            new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load("space/0002.jpg"), side: THREE.DoubleSide }),
+            new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load("space/0003.jpg"), side: THREE.DoubleSide }),
+            new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load("space/0004.jpg"), side: THREE.DoubleSide }),
+            new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load("space/0005.jpg"), side: THREE.DoubleSide }),
+            new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load("space/0006.jpg"), side: THREE.DoubleSide })
+        ]
+        var espaceMaterial = new THREE.MeshBasicMaterial( espaceMaterials );
+        var ensemble = new THREE.Mesh( espace, espaceMaterial );
+        scene.add( ensemble )*/
+
+        let espaceMaterials = [];
+        let texture_ft = new THREE.TextureLoader( ).load('kurt/space_ft.png');
+        let texture_bk = new THREE.TextureLoader( ).load('kurt/space_bk.png');
+        let texture_up = new THREE.TextureLoader( ).load('kurt/space_up.png');
+        let texture_dn = new THREE.TextureLoader( ).load('kurt/space_dn.png');
+        let texture_rt = new THREE.TextureLoader( ).load('kurt/space_rt.png');
+        let texture_lf = new THREE.TextureLoader( ).load('kurt/space_lf.png');
+
+        espaceMaterials.push(new THREE.MeshBasicMaterial({map: texture_ft}));
+        espaceMaterials.push(new THREE.MeshBasicMaterial({map: texture_bk}));
+        espaceMaterials.push(new THREE.MeshBasicMaterial({map: texture_up}));
+        espaceMaterials.push(new THREE.MeshBasicMaterial({map: texture_dn}));
+        espaceMaterials.push(new THREE.MeshBasicMaterial({map: texture_rt}));
+        espaceMaterials.push(new THREE.MeshBasicMaterial({map: texture_lf }));
+
+        for (let i=0;i<6;i++)
+            espaceMaterials[i].side = THREE.DoubleSide;
+        
+
+        let skyboxGeo = new THREE.BoxGeometry(10000, 10000, 10000);
+        let skybox = new THREE.Mesh( skyboxGeo, espaceMaterials);
+        scene.add(skybox);
+
+        var nodeSize = 10;
+        var geometry = new THREE.CubeGeometry(nodeSize, nodeSize, nodeSize);
+        var geometry2 = new THREE.CubeGeometry(nodeSize, nodeSize, nodeSize);
+        var geometry3 = new THREE.CubeGeometry(nodeSize, nodeSize, nodeSize);
+        cube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x070CE8, side: THREE.DoubleSide}));
+        cube2 = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x700CE8,side: THREE.DoubleSide}));
+        cube3 = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x4608FF, side: THREE.DoubleSide}));
+
+
+
+        var listener = new THREE.AudioListener();
+            camera.add( listener );
+
+            // create an Audio source
+            var sound = new THREE.Audio( listener );
+
+            // load a sound and set it as the Audio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load( 'lomepal2.ogg', function( buffer ) {
+                sound.setBuffer( buffer );
+                sound.setLoop(true);
+                sound.setVolume(0.5);
+                sound.play();
+            });
+
+            // create an AudioAnalyser, passing in the sound and desired fftSize
+            var analyser = new THREE.AudioAnalyser( sound, 32 );
+
+            // get the average frequency of the sound
+
+        //var plane = new THREE.GridHelper(20, 40);
+        //scene.add(plane);
+        scene.add(cube);
+        scene.add(cube2);
+        scene.add(cube3);
+        cube.position.x = 10;
+        cube3.position.x = -10;
+
+        function setSize( myMesh, xSize, ySize, zSize){
+        scaleFactorX = xSize / myMesh.geometry.parameters.width;
+        scaleFactorY = ySize / myMesh.geometry.parameters.height;
+        scaleFactorZ = zSize / myMesh.geometry.parameters.depth;
+        myMesh.scale.set( scaleFactorX, scaleFactorY, scaleFactorZ );
+        }
+
+
+
+        
+
+        function animate()
+        {
+            requestAnimationFrame(animate);
+            //plane.rotation.y -= 0.001;
+            renderer.render(scene, camera);
+            var data = analyser.getFrequencyData();
+            var freq1 = data[5];
+            var freq2 = data[6];
+            var freq3 = data[4];
+
+            setSize(cube, 10, freq2 / 10, 10);
+            setSize(cube2, 10, freq1 / 10, 10);
+            setSize(cube3, 10, freq3 / 10, 10);
+        }
+        animate();
+
+
+
+    </script>
+
+</body>
+</html>
+
+    </script>
+
+</body>
+</html>
