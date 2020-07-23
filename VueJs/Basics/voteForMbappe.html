@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>My voting page</title>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    </head>
+    <body style="font-family:sans-serif;font-size:24px;">
+        <h1>Best football player</h1>
+        <div id="app">
+            <p>
+              <button @click="nbVotesMbappe()">Mbappe</button>
+              <button @click="nbVotesFekir()">Fekir</button>
+              <button @click="nbVotesThauvin()">Thauvin</button>
+            </p>
+            <p>
+              Results : {{ nbVotes }}  votes.<br />
+            </p>
+            <div v-if="nbVotes>0">
+                <p> Mbappe: {{ (100*nbVotesKM/nbVotes).toFixed(2) }} %</p>
+                <p> Fekir: {{ (100*nbVotesNF/nbVotes).toFixed(2) }} %</p>
+                <p> Thauvin: {{ (100*nbVotesFT/nbVotes).toFixed(2) }} %</p>
+            </div>
+        </div>
+        <script>
+            var vue1 = new Vue({
+                el: "#app",
+                data: {
+                    "counter": 0,
+                    "nbVotes": 0,
+                    "nbVotesKM": 0,
+                    "nbVotesNF": 0,
+                    "nbVotesFT": 0,
+
+                 },
+                 methods: {
+                     nbVotesMbappe: function () {
+                        this.nbVotes++
+                        this.nbVotesKM++
+                     },
+                     nbVotesFekir: function () {
+                        this.nbVotes++
+                        this.nbVotesNF++
+                     },
+                     nbVotesThauvin: function () {
+                        this.nbVotes++
+                        this.nbVotesFT++
+                     },
+                     toFixed: function () {
+
+                     }
+                 }
+            });
+        </script>
+    </body>
+</html>

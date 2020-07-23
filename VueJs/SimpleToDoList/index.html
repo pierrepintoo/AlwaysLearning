@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>To do list</title>
+</head>
+<body>
+    <div id="app" v-bind:style="monStyle">
+        <h1>To do list</h1>
+        <input type="text" name="add_taches" id="addTaches" v-model="maTache" v-on:keyup.enter="addTache">
+        <button @click="addTache">Ajouter une tache</button>
+        <button @click="removeAllTaches">Supprimer ma liste</button>
+        <ul>
+            <li v-for="(tache, index) in taches" >
+
+                <input type="checkbox" v-model="tache.fini">
+                <!-- <span :class="{barre:tache.fini, normal: !tache.fini}"></span> -->
+                <span v-if="tache.fini" class="normal"><input type="text" v-model="tache.desc"/></span><span v-else="!tache.fini" class="barre"><input type="text" v-model="tache.desc" /></span>
+                <span>{{index}}</span>
+                <button @click="removeOneTache(index)">x</button>
+                
+            </li>
+            {{taches}}
+        </ul>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        let v = new Vue({
+            el: '#app',
+            data: 
+            {
+                taches: [{"desc":"manger", "fini":false}, {"desc":"boire","fini":false}, {"desc":"dormir", "fini":false}],
+                monStyle:{"list-style-type":"none"},
+                maTache: ""
+            },
+            methods: 
+            {
+                addTache: function()
+                {
+                        if(this.maTache.length>0)
+                        {
+                            this.taches.push({desc:this.maTache, fini:false})
+                            this.maTache = ""
+                        }
+                },
+
+                removeAllTaches: function()
+                {
+                    this.taches = []
+                },
+
+                removeOneTache: function (numero)
+                {
+                    this.taches.splice(numero, 1);
+                },
+            }
+        })
+        
+    </script>
+</body>
+</html>

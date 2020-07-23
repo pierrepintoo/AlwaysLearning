@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="font-family:sans-serif;font-size:24px;">
+        <h1 style="text-align:center">Liste des utilisateurs</h1>
+        <div id="app">
+            <input type="checkbox" id="gender" value="persons.gender" v-model="checkedGender">
+            <label for="checked">Genre
+            <input type="checkbox" id="john" value="persons.firstname" v-model="checkedName"></label>
+            <label for="john">Nom
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedFirstName">
+            <label for="mike">Prenom</label>
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedAge"></label>
+            <label for="mike">Age
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedPhone"></label>
+            <label for="mike">Phone
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedAddress"></label>
+            <label for="mike">Address</label>
+            <form class="form_infos_user">
+              <label>Genre
+              <select type="select" v-model="gender">
+                  <option value="male"> Male</option>
+                  <option value="female"> Female</option>
+              </select></label>
+              <label>Nom
+              <input type="text" v-model="nom"></label>
+              <label>Prenom
+              <input type="text" v-model="prenom"></label>
+              <label>Age
+              <input type="number" v-model="age"></label>
+              <label>E-mail
+              <input type="text" v-model="email"></label>
+              <label>Téléphone
+              <input type="text" v-model="tel"></label>
+              <label>Adresse
+              <input type="text" v-model="adresse"></label>
+            </form>
+            <a @click="addPerson()">Ajouter une personne</a>
+            <br>
+          <p>
+            Il y {{ nbPersons  }} personnes dans la liste, l'âge moyen est de {{ moyenne }} ans.
+          </p>
+          <hr>
+          <table>
+            <tbody><tr v-for="person in persons">
+              <th v-if="checkedGender == true"><span v-if="person.gender == 'male'">Mr.</span><span v-else>Ms.</span></th>
+              <th v-if="checkedName == true">{{ person.firstname }}</th>
+              <th v-if="checkedFirstName == true">{{ person.lastname }}</th>
+              <th v-if="checkedAge == true">{{ person.age }}</th>
+              <th v-if="checkedPhone == true">{{ person.tel }}</th>
+              <th v-if="checkedAddress == true">{{ person.adr}}</th>
+            </tr>
+          </tbody></table>
+        </div>
+        <script src="vue.js"></script>
+        <script>
+            var vue1 = new Vue({
+                el: "#app",
+                data: {
+                  age:'',
+                  gender:'',
+                  email:'',
+                  tel:'',
+                  nom: '',
+                  prenom:'',
+                  adresse:'',
+                  ageAjoute:'',
+                  checkedAddress: true,
+                  checkedPhone: true,
+                  checkedAge: true,
+                  checkedFirstName: true,
+                  checkedGender: true,
+                  checkedName: true,
+                  persons:[{"index":0,"tel":"+1 (851) 523-3425","firstname":"Luella","lastname":"Gregory","age":29,"gender":"female","adr":"446 Moultrie Street, Marshall, Michigan, 6590","email":"luellagregory@multron.com"},{"index":1,"tel":"+1 (849) 543-3738","firstname":"Pierce","lastname":"Sexton","age":22,"gender":"male","adr":"649 Kansas Place, Waterview, Palau, 295","email":"piercesexton@multron.com"},{"index":2,"tel":"+1 (941) 569-2544","firstname":"Kelley","lastname":"Wong","age":32,"gender":"male","adr":"224 Alton Place, Herald, Alaska, 3919","email":"kelleywong@multron.com"},{"index":3,"tel":"+1 (863) 520-3246","firstname":"Marilyn","lastname":"Randolph","age":40,"gender":"female","adr":"664 Bowne Street, Belgreen, Wyoming, 191","email":"marilynrandolph@multron.com"},{"index":4,"tel":"+1 (926) 450-2415","firstname":"Sondra","lastname":"Mullen","age":34,"gender":"female","adr":"520 Hanson Place, Dowling, Maine, 3133","email":"sondramullen@multron.com"},{"index":5,"tel":"+1 (801) 584-2825","firstname":"Walsh","lastname":"Pate","age":27,"gender":"male","adr":"361 Shale Street, Oretta, Marshall Islands, 9944","email":"walshpate@multron.com"},{"index":6,"tel":"+1 (829) 472-3304","firstname":"Moody","lastname":"Hickman","age":24,"gender":"male","adr":"124 Story Street, Deltaville, Guam, 4297","email":"moodyhickman@multron.com"},{"index":7,"tel":"+1 (806) 451-2872","firstname":"Wiley","lastname":"Glover","age":38,"gender":"male","adr":"537 Amber Street, Suitland, Indiana, 6433","email":"wileyglover@multron.com"},{"index":8,"tel":"+1 (895) 452-3260","firstname":"Rachelle","lastname":"Shaffer","age":38,"gender":"female","adr":"201 Polar Street, Rivera, Hawaii, 3830","email":"rachelleshaffer@multron.com"},{"index":9,"tel":"+1 (825) 404-2235","firstname":"Bruce","lastname":"Foley","age":34,"gender":"male","adr":"523 Albemarle Road, Cutter, Maryland, 2764","email":"brucefoley@multron.com"},{"index":17,"tel":"+1 (954) 541-3282","firstname":"Sheena","lastname":"Beard","age":36,"gender":"female","adr":"996 Manhattan Avenue, Colton, Utah, 5709","email":"sheenabeard@multron.com"},{"index":18,"tel":"+1 (899) 503-2717","firstname":"Rivers","lastname":"Becker","age":40,"gender":"male","adr":"947 Bushwick Avenue, Limestone, Connecticut, 3993","email":"riversbecker@multron.com"},{"index":19,"tel":"+1 (826) 599-3229","firstname":"Peggy","lastname":"Keller","age":21,"gender":"female","adr":"485 Blake Avenue, Dragoon, Washington, 145","email":"peggykeller@multron.com"},{"index":20,"tel":"+1 (922) 494-2756","firstname":"Josefina","lastname":"Zimmerman","age":38,"gender":"female","adr":"517 Etna Street, Coldiron, Arizona, 6191","email":"josefinazimmerman@multron.com"},{"index":21,"tel":"+1 (991) 467-2320","firstname":"Casey","lastname":"Brennan","age":23,"gender":"female","adr":"435 Ebony Court, Salix, North Carolina, 6502","email":"caseybrennan@multron.com"},{"index":22,"tel":"+1 (855) 501-2227","firstname":"Carole","lastname":"Holloway","age":20,"gender":"female","adr":"327 Stryker Court, Cumminsville, Illinois, 8337","email":"caroleholloway@multron.com"},{"index":23,"tel":"+1 (988) 561-3310","firstname":"Booker","lastname":"Sheppard","age":35,"gender":"male","adr":"697 Hicks Street, Hasty, West Virginia, 6698","email":"bookersheppard@multron.com"},{"index":24,"tel":"+1 (917) 560-2868","firstname":"Georgia","lastname":"Bullock","age":21,"gender":"female","adr":"580 Herkimer Court, Somerset, Minnesota, 6993","email":"georgiabullock@multron.com"},{"index":25,"tel":"+1 (828) 441-3553","firstname":"Kristine","lastname":"Lowe","age":33,"gender":"female","adr":"584 Debevoise Avenue, Coventry, Montana, 4116","email":"kristinelowe@multron.com"},{"index":26,"tel":"+1 (980) 410-3147","firstname":"Dixon","lastname":"House","age":23,"gender":"male","adr":"183 Hubbard Street, Stonybrook, Massachusetts, 6861","email":"dixonhouse@multron.com"},{"index":27,"tel":"+1 (824) 495-2162","firstname":"Hester","lastname":"Flowers","age":37,"gender":"male","adr":"690 Metropolitan Avenue, Elliott, North Dakota, 3965","email":"hesterflowers@multron.com"},{"index":28,"tel":"+1 (856) 576-2263","firstname":"Rodgers","lastname":"Farley","age":26,"gender":"male","adr":"256 Hastings Street, Tampico, New Hampshire, 5582","email":"rodgersfarley@multron.com"},{"index":29,"tel":"+1 (826) 458-2170","firstname":"Karyn","lastname":"Meadows","age":21,"gender":"female","adr":"319 Manhattan Court, Kempton, Wisconsin, 1239","email":"karynmeadows@multron.com"},{"index":30,"tel":"+1 (872) 598-3345","firstname":"Lenora","lastname":"Carson","age":28,"gender":"female","adr":"550 Oakland Place, Norvelt, Arkansas, 5820","email":"lenoracarson@multron.com"},{"index":31,"tel":"+1 (819) 420-3422","firstname":"Hall","lastname":"Griffith","age":31,"gender":"male","adr":"335 Knickerbocker Avenue, Kansas, Oklahoma, 218","email":"hallgriffith@multron.com"},{"index":32,"tel":"+1 (892) 562-2282","firstname":"Tiffany","lastname":"Albert","age":39,"gender":"female","adr":"323 Roosevelt Place, Westwood, South Dakota, 9388","email":"tiffanyalbert@multron.com"},{"index":33,"tel":"+1 (907) 417-3770","firstname":"Shannon","lastname":"Webster","age":36,"gender":"male","adr":"922 Havens Place, Riner, Rhode Island, 5535","email":"shannonwebster@multron.com"},{"index":34,"tel":"+1 (999) 521-3394","firstname":"Ramos","lastname":"Barnett","age":26,"gender":"male","adr":"956 Church Lane, Collins, Pennsylvania, 7747","email":"ramosbarnett@multron.com"},{"index":35,"tel":"+1 (972) 479-3862","firstname":"Newton","lastname":"Lane","age":40,"gender":"male","adr":"417 Lafayette Avenue, Curtice, Georgia, 3508","email":"newtonlane@multron.com"},{"index":36,"tel":"+1 (883) 498-3394","firstname":"Alma","lastname":"Summers","age":28,"gender":"female","adr":"957 Thornton Street, Brambleton, American Samoa, 5704","email":"almasummers@multron.com"},{"index":37,"tel":"+1 (836) 518-3723","firstname":"Julianne","lastname":"Winters","age":31,"gender":"female","adr":"487 Conduit Boulevard, Wanamie, Vermont, 9523","email":"juliannewinters@multron.com"},{"index":38,"tel":"+1 (975) 583-2246","firstname":"Mamie","lastname":"Graham","age":33,"gender":"female","adr":"663 Dodworth Street, Cresaptown, Virgin Islands, 5348","email":"mamiegraham@multron.com"},{"index":39,"tel":"+1 (862) 429-2512","firstname":"Bertie","lastname":"Dalton","age":32,"gender":"female","adr":"552 Clymer Street, Echo, California, 7551","email":"bertiedalton@multron.com"},{"index":45,"tel":"+1 (896) 535-3122","firstname":"Horne","lastname":"Soto","age":24,"gender":"male","adr":"567 Durland Place, Delwood, Virginia, 780","email":"hornesoto@multron.com"},{"index":46,"tel":"+1 (841) 579-3847","firstname":"Edna","lastname":"Hays","age":33,"gender":"female","adr":"448 Ash Street, Barclay, Ohio, 6193","email":"ednahays@multron.com"},{"index":47,"tel":"+1 (976) 552-3929","firstname":"Vivian","lastname":"Walter","age":38,"gender":"female","adr":"237 Ivan Court, Saranap, Federated States Of Micronesia, 656","email":"vivianwalter@multron.com"},{"index":48,"tel":"+1 (973) 431-2210","firstname":"Magdalena","lastname":"Hendricks","age":20,"gender":"female","adr":"706 Lewis Place, Otranto, District Of Columbia, 5778","email":"magdalenahendricks@multron.com"},{"index":49,"tel":"+1 (841) 482-2614","firstname":"Mckay","lastname":"Fisher","age":39,"gender":"male","adr":"913 Robert Street, Grazierville, Northern Mariana Islands, 3110","email":"mckayfisher@multron.com"},{"index":50,"tel":"+1 (945) 439-3945","firstname":"Barnes","lastname":"Leblanc","age":33,"gender":"male","adr":"287 Seton Place, Fairfield, Delaware, 586","email":"barnesleblanc@multron.com"},{"index":51,"tel":"0606060606","firstname":"Jérôme","lastname":"Landré","age":43,"gender":"male","adr":"9 rue de Québec 10000 Troyes","email":"jerome.landre@univ-reims.fr"},{"index":52,"tel":"+1 (851) 425-3631","firstname":"Pacheco","lastname":"Richards","age":40,"gender":"male","adr":"119 Bushwick Court, Bend, New Mexico, 104","email":"pachecorichards@multron.com"},{"index":53,"tel":"+1 (983) 511-3889","firstname":"Vincent","lastname":"Ratliff","age":35,"gender":"male","adr":"889 Bond Street, Farmington, Puerto Rico, 3285","email":"vincentratliff@multron.com"},{"index":54,"tel":"+1 (880) 534-2023","firstname":"Lynn","lastname":"James","age":31,"gender":"male","adr":"885 Bijou Avenue, Harrison, Missouri, 7948","email":"lynnjames@multron.com"},{"index":55,"tel":"+1 (998) 587-2397","firstname":"Dawn","lastname":"Mayer","age":32,"gender":"female","adr":"124 Lenox Road, Itmann, Alabama, 6587","email":"dawnmayer@multron.com"},{"index":56,"tel":"+1 (955) 496-3312","firstname":"Lydia","lastname":"Pitts","age":39,"gender":"female","adr":"393 Kermit Place, Efland, Nevada, 2200","email":"lydiapitts@multron.com"},{"index":57,"tel":"+1 (954) 522-3953","firstname":"Robin","lastname":"Edwards","age":35,"gender":"female","adr":"757 Gerry Street, Breinigsville, New York, 8427","email":"robinedwards@multron.com"},{"index":58,"tel":"+1 (904) 468-2964","firstname":"Marlene","lastname":"Tucker","age":33,"gender":"female","adr":"502 Bartlett Street, Catherine, Michigan, 4210","email":"marlenetucker@multron.com"},{"index":59,"tel":"+1 (890) 589-2190","firstname":"Shawna","lastname":"Sparks","age":36,"gender":"female","adr":"637 Mill Street, Waukeenah, Palau, 816","email":"shawnasparks@multron.com"},{"index":60,"tel":"+1 (938) 505-2574","firstname":"Avila","lastname":"Jimenez","age":20,"gender":"male","adr":"507 Bedford Avenue, Vincent, Alaska, 2185","email":"avilajimenez@multron.com"},{"index":61,"tel":"+1 (823) 483-2289","firstname":"Solomon","lastname":"Calhoun","age":24,"gender":"male","adr":"825 Veranda Place, Coral, Wyoming, 5720","email":"solomoncalhoun@multron.com"},{"index":62,"tel":"+1 (901) 508-2027","firstname":"Isabelle","lastname":"Cline","age":37,"gender":"female","adr":"152 Sackman Street, Sunbury, Maine, 7726","email":"isabellecline@multron.com"},{"index":63,"tel":"+1 (807) 402-2327","firstname":"Deirdre","lastname":"Burt","age":34,"gender":"female","adr":"807 Livonia Avenue, Deercroft, Marshall Islands, 5221","email":"deirdreburt@multron.com"},{"index":64,"tel":"+1 (845) 520-3067","firstname":"Kathleen","lastname":"Holder","age":20,"gender":"female","adr":"764 Portland Avenue, Virgie, Oregon, 1487","email":"kathleenholder@multron.com"},{"index":65,"tel":"+1 (971) 434-3672","firstname":"Aurelia","lastname":"Mcleod","age":33,"gender":"female","adr":"877 Jackson Place, Blodgett, Indiana, 2137","email":"aureliamcleod@multron.com"},{"index":66,"tel":"+1 (817) 438-3831","firstname":"Mollie","lastname":"Taylor","age":32,"gender":"female","adr":"572 Clinton Avenue, Balm, Hawaii, 8154","email":"mollietaylor@multron.com"},{"index":67,"tel":"+1 (908) 425-2411","firstname":"Estella","lastname":"Crawford","age":29,"gender":"female","adr":"979 Lawrence Street, Silkworth, Maryland, 1941","email":"estellacrawford@multron.com"},{"index":68,"tel":"+1 (929) 513-3969","firstname":"Bond","lastname":"Hopkins","age":40,"gender":"male","adr":"650 Gold Street, Denio, Kentucky, 6109","email":"bondhopkins@multron.com"},{"index":69,"tel":"+1 (930) 557-3173","firstname":"Christensen","lastname":"Pacheco","age":22,"gender":"male","adr":"187 Baughman Place, Konterra, Tennessee, 3072","email":"christensenpacheco@multron.com"},{"index":70,"tel":"+1 (991) 458-3562","firstname":"Peterson","lastname":"Moreno","age":25,"gender":"male","adr":"971 Coles Street, Grapeview, New Jersey, 2846","email":"petersonmoreno@multron.com"},{"index":71,"tel":"+1 (828) 532-2734","firstname":"Rowland","lastname":"Weaver","age":39,"gender":"male","adr":"223 Milton Street, Twilight, Louisiana, 7257","email":"rowlandweaver@multron.com"},{"index":72,"tel":"+1 (984) 449-3406","firstname":"Agnes","lastname":"Walters","age":34,"gender":"female","adr":"781 Pooles Lane, Toftrees, Idaho, 8040","email":"agneswalters@multron.com"},{"index":73,"tel":"+1 (992) 470-2980","firstname":"Spears","lastname":"Tyler","age":21,"gender":"male","adr":"886 Balfour Place, Glidden, Mississippi, 488","email":"spearstyler@multron.com"},{"index":74,"tel":"+1 (900) 547-3319","firstname":"Kendra","lastname":"Alford","age":33,"gender":"female","adr":"827 Humboldt Street, Kent, Florida, 2436","email":"kendraalford@multron.com"},{"index":75,"tel":"+1 (882) 562-3324","firstname":"Glass","lastname":"Roman","age":28,"gender":"male","adr":"133 Brown Street, Alderpoint, Utah, 9506","email":"glassroman@multron.com"},{"index":76,"tel":"+1 (922) 441-2434","firstname":"Reeves","lastname":"Moss","age":32,"gender":"male","adr":"121 Central Avenue, Iola, Connecticut, 2327","email":"reevesmoss@multron.com"},{"index":77,"tel":"+1 (858) 443-3840","firstname":"Leta","lastname":"Noel","age":39,"gender":"female","adr":"340 Williams Court, Harrodsburg, Washington, 3517","email":"letanoel@multron.com"},{"index":78,"tel":"+1 (940) 497-2192","firstname":"Naomi","lastname":"Frye","age":27,"gender":"female","adr":"967 Vermont Court, Masthope, Arizona, 9032","email":"naomifrye@multron.com"},{"index":79,"tel":"+1 (972) 424-3998","firstname":"Trina","lastname":"Marquez","age":24,"gender":"female","adr":"136 Grove Place, Lutsen, North Carolina, 8429","email":"trinamarquez@multron.com"},{"index":80,"tel":"+1 (845) 561-2479","firstname":"Melanie","lastname":"Hartman","age":22,"gender":"female","adr":"994 Loring Avenue, Genoa, Illinois, 3001","email":"melaniehartman@multron.com"},{"index":81,"tel":"+1 (914) 499-2862","firstname":"Palmer","lastname":"Sanford","age":31,"gender":"male","adr":"141 Lyme Avenue, Monument, West Virginia, 1226","email":"palmersanford@multron.com"},{"index":82,"tel":"+1 (932) 576-2561","firstname":"Eliza","lastname":"Houston","age":40,"gender":"female","adr":"428 Boerum Street, Woodlake, Minnesota, 9013","email":"elizahouston@multron.com"},{"index":83,"tel":"+1 (845) 451-2651","firstname":"Melendez","lastname":"Diaz","age":39,"gender":"male","adr":"385 Juliana Place, Como, Montana, 4470","email":"melendezdiaz@multron.com"},{"index":84,"tel":"+1 (920) 432-2904","firstname":"Benton","lastname":"Petty","age":27,"gender":"male","adr":"280 Kane Place, Woodlands, Massachusetts, 6922","email":"bentonpetty@multron.com"},{"index":85,"tel":"+1 (937) 589-2058","firstname":"Mcconnell","lastname":"Conner","age":34,"gender":"male","adr":"968 Mill Road, Corinne, North Dakota, 3509","email":"mcconnellconner@multron.com"},{"index":86,"tel":"+1 (986) 449-3232","firstname":"Patton","lastname":"Cohen","age":37,"gender":"male","adr":"971 Howard Place, Yukon, New Hampshire, 7596","email":"pattoncohen@multron.com"},{"index":87,"tel":"+1 (838) 461-2162","firstname":"Murphy","lastname":"Banks","age":20,"gender":"male","adr":"756 Hendrix Street, Tilden, Wisconsin, 3558","email":"murphybanks@multron.com"},{"index":95,"tel":"+1 (873) 528-2995","firstname":"Sheila","lastname":"Brady","age":29,"gender":"female","adr":"667 Veronica Place, Canoochee, Vermont, 8866","email":"sheilabrady@multron.com"},{"index":96,"tel":"+1 (969) 517-2227","firstname":"Hewitt","lastname":"Church","age":22,"gender":"male","adr":"989 Ralph Avenue, Sunnyside, Virgin Islands, 5690","email":"hewittchurch@multron.com"},{"index":97,"tel":"+1 (978) 510-3957","firstname":"Joseph","lastname":"Morrison","age":28,"gender":"male","adr":"709 Channel Avenue, Harleigh, California, 2252","email":"josephmorrison@multron.com"},{"index":98,"tel":"+1 (949) 521-3742","firstname":"Kristy","lastname":"Bartlett","age":22,"gender":"female","adr":"149 Bergen Place, Norwood, Nebraska, 4368","email":"kristybartlett@multron.com"},{"index":99,"tel":"+1 (919) 560-2557","firstname":"Juliette","lastname":"Mayo","age":40,"gender":"female","adr":"758 Cobek Court, Blanford, Colorado, 7774","email":"juliettemayo@multron.com"},{"index":100,"tel":"+1 (919) 560-2557","firstname":"Juliette","lastname":"Mayo","age":90,"gender":"female","adr":"758 Cobek Court, Blanford, Colorado, 7774","email":"juliettemayo@multron.com"}]
+                },
+                methods: {
+                  addPerson: function(){
+                    this.persons.push({
+                      age: parseInt(this.age, 10),
+                      gender: this.gender,
+                      firstname: this.prenom,
+                      lastname: this.nom,
+                      adr: this.adresse,
+                      email: this.email,
+                      tel: this.tel,
+                    })
+                  }
+                },
+                computed: {
+                  nbPersons: function () {
+                    return this.persons.length
+                  },
+                  moyenne: function () {
+                    sum=0;
+                    this.persons.forEach(function(element) {
+                      sum+=element.age;
+                    });
+                    return (sum/this.nbPersons).toFixed(1);
+                  }
+                },
+            });
+        </script>
+    
+
+</body></html>

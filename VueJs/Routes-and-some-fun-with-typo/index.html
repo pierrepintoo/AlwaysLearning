@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue-router"></script>
+		<style>
+				body { font-family:sans-serif;margin:0px;font-size:24px; }
+				header { position:absolute;top:0px;width:100%;height:36px;text-align:center;background-color:#ccc;padding-top:4px; }
+				footer { position:absolute;bottom:0px;width:100%;height:36px;text-align:center;background-color:#ccc;padding-top:4px; }
+				#content { margin-top:30px;height:2000px; }
+				#content>div { margin:40px 30px 20px 30px; }
+				.lowC { background-color:#ccc; color:#000; }
+				.highC { background-color:#000; color:#ccc; }
+		</style>
+	</head>
+	<body>
+		<div id="app">
+				<header>
+					<router-link to="/">Home</router-link>
+					<router-link to="/Events">Events</router-link>
+					<router-link to="/Information">Information</router-link>
+					<router-link to="/Contact">Contact</router-link>
+					<button v-on:click="size--">-</button>
+						aA
+					<button v-on:click="size++">+</button> 
+					<input type="checkbox" v-model="highContrast">☯
+				</header> 
+				<mon-smiley  text="Hello le monde" date="10/10/1997"></mon-smiley>
+			<div id="content" :style="{ fontSize : size + 'px' }" :class="{ lowC:!highContrast, highC:highContrast }">
+				<router-view></router-view>
+			</div>
+			<footer>
+						©  Pierre Pinto de Oliveira
+			</footer>
+		</div>
+		<script>
+			const homeTemplate = { template: "\
+				<div>\
+					<h1>Home</h1>\
+					<p>Welcome on my site!</p>\
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a tincidunt purus. Quisque ac luctus sapien. Quisque eleifend in nulla tincidunt suscipit.\
+					In euismod et lorem in posuere. Donec vulputate tortor quis sapien condimentum convallis. Donec pulvinar eget massa vel consectetur. Sed cursus rhoncus \
+					ornare. Nulla vulputate malesuada gravida. Sed eget ipsum ac elit tincidunt posuere non a nulla.</p>\
+				</div>" };
+
+			const eventsTemplate = { template: "<div><h1>Events</h1><p>Shortcoming events...</p></div>" };
+			
+			const informationTemplate = { template: "<div><h1>Information</h1><p>A list of many useful information...</p></div>" };
+
+			const contactTemplate = { template: '\
+				<div>\
+					<h1>Contact</h1>\
+					<p>Contact us...</p>\
+					<p>\
+						<form>\
+							Name: <input type="text" name="name" placeholder="Your name..."/><br />\
+							E-mail: <input type="email" name="email"  placeholder="Your e-mail..."/><br />\
+							Message: <textarea name="message" placeholder="Your message..."></textarea><br />\
+							<input type="submit" value="Send" />\
+						</form>\
+					</p>\
+				</div>' };
+
+		const myRoutes = 
+		[
+			{path: "/", component : homeTemplate }, {path: "/Events", component : eventsTemplate}, {path:"/Information", component: informationTemplate},{path:"/Contact", component: contactTemplate}, {path:"*", redirect:"/"}
+		];
+		
+		const componentSmiley = 
+		{
+			props: [ 'text', 'date' ],
+			template: '<h1>{{text}} Date : {{date}}</h1>'
+		};
+			
+		var router = new VueRouter(
+			{
+				routes: myRoutes
+			});
+
+		var app = new Vue(
+			{
+				el: "#app",
+				router: router,
+				data: {
+					highContrast: false,
+					size: 100
+
+				},
+				components: {
+					"mon-smiley":componentSmiley
+				}
+			});
+		</script>
+	</body>
+</html>
